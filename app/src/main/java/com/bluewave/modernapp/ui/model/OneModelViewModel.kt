@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.bluewave.modernapp.data.OneModelRepository
 import com.bluewave.modernapp.ui.model.OneModelUiState.Success
 import com.bluewave.modernapp.ui.model.OneModelUiState.Error
+import com.bluewave.modernapp.ui.model.OneModelUiState.Loading
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +29,7 @@ class OneModelViewModel @Inject constructor(
     val uiState: StateFlow<OneModelUiState> = repository
         .myItems.map<List<String>, OneModelUiState>(::Success)
         .catch { emit(Error(it)) }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), OneModelUiState.Loading);
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), Loading);
 }
 
 
